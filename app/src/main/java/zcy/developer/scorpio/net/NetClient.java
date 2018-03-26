@@ -1,6 +1,10 @@
 package zcy.developer.scorpio.net;
 
+import android.util.Log;
+
+import io.reactivex.Observable;
 import zcy.developer.scorpiosdk.net.builder.NetworkService;
+import zcy.developer.scorpiosdk.net.util.NetUtils;
 
 /**
  * @author zcy.
@@ -13,11 +17,11 @@ public class NetClient {
         NetworkService service = new NetworkService
                 .Builder<Api>()
                 .setApi(Api.class)
-                .setBaseUrl("")
+                .setBaseUrl("https://www.sojson.com/open/api/weather/")
                 .create();
 
-        new NetworkService.Builder<Api>()
-                .setApi(Api.class)
-                .setBaseUrl("");
+        Api api = (Api) service.getApi();
+        Observable<String> o = api.getTest("成都");
+        NetUtils.startRequest(o, s -> Log.d("测试", "accept: s==" + s));
     }
 }

@@ -1,5 +1,6 @@
 package zcy.developer.scorpiosdk.net.progress;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 
 import io.reactivex.Observer;
@@ -21,6 +22,7 @@ public class ProgressSubscriber<T> implements ProgressCancelListener, Observer<T
     private Disposable disposable;
     private String message;
     private IBaseView iBaseView;
+    private Activity activity;
     private ProgressDialog dialog;
 
     public ProgressSubscriber(RequestListener<T> requestListener, IBaseView iBaseView) {
@@ -28,8 +30,13 @@ public class ProgressSubscriber<T> implements ProgressCancelListener, Observer<T
         this.iBaseView = iBaseView;
     }
 
+    public ProgressSubscriber(RequestListener<T> requestListener, Activity activity) {
+        this.requestListener = requestListener;
+        this.activity = activity;
+    }
+
     private void showProgressDialog() {
-        dialog = new ProgressDialog(iBaseView.getContext());
+        dialog = new ProgressDialog(iBaseView != null ? iBaseView.getContext() : activity);
         dialog.setMessage(message);
         dialog.show();
     }

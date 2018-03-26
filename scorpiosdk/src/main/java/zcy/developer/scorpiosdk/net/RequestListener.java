@@ -1,6 +1,6 @@
 package zcy.developer.scorpiosdk.net;
 
-import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.util.Log;
 
 import java.net.ConnectException;
@@ -41,9 +41,18 @@ public abstract class RequestListener<T> {
     public abstract void onError(String errorMsg);
 
     private IBaseView iBaseView;
+    private Activity activity;
 
     protected RequestListener(IBaseView iBaseView) {
         this.iBaseView = iBaseView;
+    }
+
+    protected RequestListener() {
+
+    }
+
+    public void setActivity() {
+        this.activity = activity;
     }
 
     /**
@@ -76,31 +85,40 @@ public abstract class RequestListener<T> {
         }
     }
 
+    private Observable<T> initObservable(Observable<T> o) {
+        o.debounce(500, TimeUnit.MILLISECONDS);
+        if (iBaseView == null) {
+            if (activity != null) {
+                o.compose(RxUtils.bindToLifecycle(activity));
+            }
+        } else {
+            o.compose(RxUtils.bindToLifecycle(iBaseView));
+        }
+        return o.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 
     /**
      * 发起网络请求
      */
-    @SuppressLint("CheckResult")
     public void request(Observable<T> o) {
-        o.debounce(500, TimeUnit.MILLISECONDS)
-                .compose(RxUtils.bindToLifecycle(iBaseView))
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::requestSuccess, this::requestError);
+        initObservable(o).subscribe(this::requestSuccess, this::requestError);
     }
 
     /**
      * 创建带加载进度的网络请求
      */
     public void requestWithProgress(Observable<T> o) {
-        o.debounce(500, TimeUnit.MILLISECONDS)
-                .compose(RxUtils.bindToLifecycle(iBaseView))
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new ProgressSubscriber<>(this, iBaseView));
+        o = initObservable(o);
+        if (iBaseView != null) {
+            o.subscribe(new ProgressSubscriber<>(this, iBaseView));
+        } else if (activity != null) {
+            o.subscribe(new ProgressSubscriber<>(this, activity));
+        } else {
+            throw new NullPointerException("Context is null");
+        }
     }
-
 
 }

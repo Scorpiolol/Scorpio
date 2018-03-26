@@ -73,7 +73,7 @@ public interface IBuilder {
 
         Builder<T> setBuilder(OkHttpClient.Builder builder);
 
-        Builder<T> addFactory(Converter.Factory factory);
+        Builder<T> addConverterFactory(Converter.Factory factory);
 
         Builder<T> addAdapterFactory(CallAdapter.Factory adapterFactory);
 

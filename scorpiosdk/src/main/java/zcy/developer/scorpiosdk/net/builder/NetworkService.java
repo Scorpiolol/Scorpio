@@ -15,8 +15,8 @@ import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.fastjson.FastJsonConverterFactory;
 import zcy.developer.scorpiosdk.net.config.HeaderConfig;
-import zcy.developer.scorpiosdk.net.factory.GsonDConverterFactory;
 import zcy.developer.scorpiosdk.net.interceptor.HeaderInterceptor;
 
 /**
@@ -51,7 +51,9 @@ public class NetworkService<T> {
         if (this.interceptors == null) {
             this.interceptors = new ArrayList<>();
         }
-        this.interceptors.addAll(Arrays.asList(interceptors));
+        if (interceptors != null && interceptors.length > 0) {
+            this.interceptors.addAll(Arrays.asList(interceptors));
+        }
         return this;
     }
 
@@ -123,10 +125,9 @@ public class NetworkService<T> {
         return new Retrofit.Builder()
                 .client(okHttpClient)
                 .addCallAdapterFactory(adapterFactory == null ? RxJava2CallAdapterFactory.create() : adapterFactory)
-                .addConverterFactory(factory == null ? GsonDConverterFactory.create() : factory)
+                .addConverterFactory(factory == null ? FastJsonConverterFactory.create() : factory)
                 .baseUrl(baseUrl)
-                .build()
-                .create(api);
+                .build().create(api);
     }
 
     public T getApi() {
@@ -222,7 +223,7 @@ public class NetworkService<T> {
         }
 
         @Override
-        public IBuilder.Builder<T> addFactory(Converter.Factory factory) {
+        public IBuilder.Builder<T> addConverterFactory(Converter.Factory factory) {
             this.factory = factory;
             return this;
         }
