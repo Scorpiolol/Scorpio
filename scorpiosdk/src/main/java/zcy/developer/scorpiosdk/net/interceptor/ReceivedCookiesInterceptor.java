@@ -14,7 +14,9 @@ import zcy.developer.scorpiosdk.App;
 
 /**
  * 将http返回的cookie存储到本地
- * Created by wyt on 2017/8/30.
+ *
+ * @author zcy
+ * @date 2017/8/30
  */
 
 public class ReceivedCookiesInterceptor implements Interceptor {

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import java.io.IOException;
 
@@ -28,6 +29,11 @@ public class AddCookiesInterceptor implements Interceptor {
         this.lang = lang;
     }
 
+    public AddCookiesInterceptor(Context context) {
+        super();
+        this.context = context;
+    }
+
     @SuppressLint("CheckResult")
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
@@ -35,11 +41,13 @@ public class AddCookiesInterceptor implements Interceptor {
         SharedPreferences sharedPreferences = context.getSharedPreferences("cookie", Context.MODE_PRIVATE);
         Observable.just(sharedPreferences.getString("cookie", ""))
                 .subscribe(cookie -> {
-                    if (cookie.contains("lang=ch")) {
-                        cookie = cookie.replace("lang=ch", "lang=" + lang);
-                    }
-                    if (cookie.contains("lang=en")) {
-                        cookie = cookie.replace("lang=en", "lang=" + lang);
+                    if (TextUtils.isEmpty(lang)) {
+                        if (cookie.contains("lang=ch")) {
+                            cookie = cookie.replace("lang=ch", "lang=" + lang);
+                        }
+                        if (cookie.contains("lang=en")) {
+                            cookie = cookie.replace("lang=en", "lang=" + lang);
+                        }
                     }
                     //添加cookie
                     builder.addHeader("cookie", cookie);

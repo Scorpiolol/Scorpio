@@ -1,17 +1,12 @@
 package zcy.developer.scorpiosdk.net.config;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author zcy.
  * @date 2018/3/24.
  */
 public class HeaderConfig {
-
-    public static Map<String, String> getDefaultHeader() {
-        Map<String, String> map = new HashMap<>();
-        map.put("charset", "UTF-8");
-        return map;
-    }
+    public static final int BODY = 0;
+    public static final int NONE = 1;
+    public static final int BASIC = 2;
+    public static final int HEADERS = 3;
 }

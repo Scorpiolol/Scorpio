@@ -9,7 +9,6 @@ import java.util.Map;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
-import zcy.developer.scorpiosdk.net.config.HeaderConfig;
 
 /**
  * @author zcy.
@@ -21,19 +20,20 @@ public class HeaderInterceptor implements Interceptor {
     @SuppressWarnings("unused")
     private static final String TAG = "HeaderInterceptor";
 
-    private boolean useDefaultHeader = true;
     private Map<String, String> headerMap;
+    private Map<String, String> defaultHeaderMap;
 
     public HeaderInterceptor() {
 
     }
 
-    public HeaderInterceptor(Map<String, String> map) {
-        headerMap = map;
+    public HeaderInterceptor setHeader(Map<String, String> headerMap) {
+        this.headerMap = headerMap;
+        return this;
     }
 
-    public HeaderInterceptor setDefaultHeader(boolean use) {
-        useDefaultHeader = use;
+    public HeaderInterceptor setDefaultHeader(Map<String, String> defaultHeaderMap) {
+        this.defaultHeaderMap = defaultHeaderMap;
         return this;
     }
 
@@ -41,14 +41,16 @@ public class HeaderInterceptor implements Interceptor {
     public Response intercept(@NonNull Chain chain) throws IOException {
         Request.Builder builder = chain.request().newBuilder();
         initHeader(builder);
-        Log.d("网络请求", "Request Header: \n" + builder.build().headers().toString());
+        if (defaultHeaderMap != null || headerMap != null) {
+            Log.d("网络请求", "Request Header: \n" + builder.build().headers().toString());
+        }
         return chain.proceed(builder.build());
     }
 
 
     private void initHeader(Request.Builder builder) {
-        if (useDefaultHeader) {
-            addHeader(builder, HeaderConfig.getDefaultHeader());
+        if (defaultHeaderMap != null) {
+            addHeader(builder, defaultHeaderMap);
         }
         if (headerMap != null) {
             addHeader(builder, headerMap);
