@@ -23,7 +23,7 @@ import zcy.developer.scorpiosdk.net.interceptor.HeaderInterceptor;
  * @author zcy.
  * @date 2018/3/25.
  */
-public class NetworkService<T> {
+public class SoNetworkService<T> {
 
     private String baseUrl;
     private Class<T> api;
@@ -37,17 +37,17 @@ public class NetworkService<T> {
     private Converter.Factory factory;
     private CallAdapter.Factory adapterFactory;
 
-    NetworkService<T> setApi(final Class<T> api) {
+    SoNetworkService<T> setApi(final Class<T> api) {
         this.api = api;
         return this;
     }
 
-    NetworkService<T> setBaseUrl(String baseUrl) {
+    SoNetworkService<T> setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
         return this;
     }
 
-    NetworkService<T> addInterceptor(Interceptor... interceptors) {
+    SoNetworkService<T> addInterceptor(Interceptor... interceptors) {
         if (this.interceptors == null) {
             this.interceptors = new ArrayList<>();
         }
@@ -57,27 +57,27 @@ public class NetworkService<T> {
         return this;
     }
 
-    NetworkService<T> addDefaultHeader(Map<String, String> defaultHeader) {
+    SoNetworkService<T> addDefaultHeader(Map<String, String> defaultHeader) {
         this.defaultHeader = defaultHeader;
         return this;
     }
 
-    NetworkService<T> addHeader(Map<String, String> header) {
+    SoNetworkService<T> addHeader(Map<String, String> header) {
         this.header = header;
         return this;
     }
 
-    NetworkService<T> addConverterFactory(Converter.Factory factory) {
+    SoNetworkService<T> addConverterFactory(Converter.Factory factory) {
         this.factory = factory;
         return this;
     }
 
-    NetworkService<T> addCallAdapterFactory(CallAdapter.Factory factory) {
+    SoNetworkService<T> addCallAdapterFactory(CallAdapter.Factory factory) {
         this.adapterFactory = factory;
         return this;
     }
 
-    NetworkService<T> setLogLevel(int level) {
+    SoNetworkService<T> setLogLevel(int level) {
         switch (level) {
             case HeaderConfig.BODY:
                 mLevel = HttpLoggingInterceptor.Level.BODY;
@@ -99,12 +99,12 @@ public class NetworkService<T> {
         return this;
     }
 
-    NetworkService<T> setConnectTimeout(int milliseconds) {
+    SoNetworkService<T> setConnectTimeout(int milliseconds) {
         this.connectTime = milliseconds;
         return this;
     }
 
-    NetworkService<T> setBuilder(OkHttpClient.Builder builder) {
+    SoNetworkService<T> setBuilder(OkHttpClient.Builder builder) {
         this.builder = builder;
         return this;
     }

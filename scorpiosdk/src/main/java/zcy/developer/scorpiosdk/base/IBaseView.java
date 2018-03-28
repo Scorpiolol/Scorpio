@@ -27,4 +27,5 @@ public interface IBaseView extends LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     void initData();
+
 }

@@ -21,7 +21,7 @@ public class ApiBuilder<T> implements IBuilder.Api<T> {
     }
 
     @Override
-    public NetworkService<T> create() {
+    public SoNetworkService<T> create() {
         if (TextUtils.isEmpty(baseUrl)) {
             throw new NullPointerException("baseUrl is empty");
         }
@@ -42,8 +42,8 @@ public class ApiBuilder<T> implements IBuilder.Api<T> {
         return initNetWorkService().getBuilder();
     }
 
-    private NetworkService<T> initNetWorkService() {
-        return new NetworkService<T>()
+    private SoNetworkService<T> initNetWorkService() {
+        return new SoNetworkService<T>()
                 .setBaseUrl(baseUrl)
                 .setApi(value.api())
                 .addInterceptor(value.interceptors())

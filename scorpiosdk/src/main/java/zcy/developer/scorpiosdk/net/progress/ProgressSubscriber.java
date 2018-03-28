@@ -7,7 +7,7 @@ import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import zcy.developer.scorpiosdk.base.IBaseView;
-import zcy.developer.scorpiosdk.net.RequestListener;
+import zcy.developer.scorpiosdk.net.request.SoRequestListener;
 
 /**
  * 用于在Http请求开始时，自动显示一个ProgressDialog
@@ -18,19 +18,19 @@ public class ProgressSubscriber<T> implements ProgressCancelListener, Observer<T
 
     private static final String TAG = "ProgressSubscriber";
 
-    private RequestListener<T> requestListener;
+    private SoRequestListener<T> requestListener;
     private Disposable disposable;
     private String message;
     private IBaseView iBaseView;
     private Activity activity;
     private ProgressDialog dialog;
 
-    public ProgressSubscriber(RequestListener<T> requestListener, IBaseView iBaseView) {
+    public ProgressSubscriber(SoRequestListener<T> requestListener, IBaseView iBaseView) {
         this.requestListener = requestListener;
         this.iBaseView = iBaseView;
     }
 
-    public ProgressSubscriber(RequestListener<T> requestListener, Activity activity) {
+    public ProgressSubscriber(SoRequestListener<T> requestListener, Activity activity) {
         this.requestListener = requestListener;
         this.activity = activity;
     }
@@ -53,8 +53,9 @@ public class ProgressSubscriber<T> implements ProgressCancelListener, Observer<T
      */
     @Override
     public void onError(Throwable e) {
-        if (requestListener != null)
-            requestListener.onError(e.getMessage());
+        if (requestListener != null) {
+            requestListener.onError(e, e.getMessage());
+        }
         dismissProgressDialog();
 
     }

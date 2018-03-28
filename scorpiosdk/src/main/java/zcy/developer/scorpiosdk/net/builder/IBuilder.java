@@ -45,7 +45,7 @@ public interface IBuilder {
 
     interface Api<T> {
 
-        NetworkService<T> create();
+        SoNetworkService<T> create();
 
         OkHttpClient.Builder getBuilder();
 

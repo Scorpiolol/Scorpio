@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -20,7 +22,6 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import zcy.developer.scorpiosdk.util.ToastUtils;
 
 /**
@@ -46,19 +47,17 @@ public abstract class BaseActivity<P extends IBasePresenter<IBaseView>>
      * 是否使用EventBus
      */
     private boolean isUseEventBus;
-    private Unbinder binder;
     private int layoutRes;
     private long lastClickTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        layoutRes = getLayoutId();
-        Log.d(TAG, "onCreate: layoutId==" + getLayoutId());
+        layoutRes = setLayoutId();
+        Log.d(TAG, "onCreate: layoutId==" + setLayoutId());
         if (layoutRes != 0) {
             setContentView(layoutRes);
             view = LayoutInflater.from(this).inflate(layoutRes, null);
-            binder = ButterKnife.bind(this);
             context = this;
             activity = this;
         }
@@ -67,9 +66,13 @@ public abstract class BaseActivity<P extends IBasePresenter<IBaseView>>
             presenter = initPresenter();
         }
 
-        initSystemBarTint();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            initSystemBarTint();
+        }
+        ButterKnife.bind(this);
         initView();
         initListener();
+        getLifecycle().addObserver(this);
 
         if (useEventBus(isUseEventBus)) {
             Log.d(TAG, "onCreate: 注册EventBus");
@@ -85,11 +88,6 @@ public abstract class BaseActivity<P extends IBasePresenter<IBaseView>>
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (binder != null && binder != Unbinder.EMPTY) {
-            binder.unbind();
-        }
-        this.binder = null;
-
         if (presenter != null) {
             presenter.unbindView();
         }
@@ -103,7 +101,7 @@ public abstract class BaseActivity<P extends IBasePresenter<IBaseView>>
         }
     }
 
-    protected abstract int getLayoutId();
+    protected abstract int setLayoutId();
 
     protected abstract P initPresenter();
 
@@ -113,6 +111,7 @@ public abstract class BaseActivity<P extends IBasePresenter<IBaseView>>
 
     protected abstract void onClickView(View v);
 
+
     @Override
     public void onClick(final View v) {
         if (!isFastDoubleClick()) {
@@ -121,7 +120,7 @@ public abstract class BaseActivity<P extends IBasePresenter<IBaseView>>
     }
 
     public View getView() {
-        if (getLayoutId() != 0) {
+        if (setLayoutId() != 0) {
             return view;
         }
         return null;
@@ -130,7 +129,7 @@ public abstract class BaseActivity<P extends IBasePresenter<IBaseView>>
 
     @Override
     public Context getContext() {
-        if (getLayoutId() != 0) {
+        if (setLayoutId() != 0) {
             return context;
         }
         return null;
@@ -138,7 +137,7 @@ public abstract class BaseActivity<P extends IBasePresenter<IBaseView>>
 
     @Override
     public Activity getActivity() {
-        if (getLayoutId() != 0) {
+        if (setLayoutId() != 0) {
             return activity;
         }
         return null;
@@ -160,6 +159,7 @@ public abstract class BaseActivity<P extends IBasePresenter<IBaseView>>
     /**
      * 导航栏透明
      */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initSystemBarTint() {
         if (translucentStatusBar(isTitleBarTransparent)) {
             Window window = getWindow();
@@ -176,6 +176,9 @@ public abstract class BaseActivity<P extends IBasePresenter<IBaseView>>
      */
     protected boolean translucentStatusBar(boolean isTitleBarTransparent) {
         this.isTitleBarTransparent = isTitleBarTransparent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Log.e("Scorpio", "Build.VERSION_CODES<21");
+        }
         return isTitleBarTransparent;
     }
 
