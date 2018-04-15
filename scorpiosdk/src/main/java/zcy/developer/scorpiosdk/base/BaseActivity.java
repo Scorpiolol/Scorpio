@@ -248,7 +248,7 @@ public abstract class BaseActivity<P extends IBasePresenter<IBaseView>>
     }
 
     public boolean isShouldHideInput(View v, MotionEvent event) {
-        if (v != null && (v instanceof EditText)) {
+        if ((v instanceof EditText)) {
             int[] leftTop = {0, 0};
             //获取输入框当前的location位置
             v.getLocationInWindow(leftTop);
