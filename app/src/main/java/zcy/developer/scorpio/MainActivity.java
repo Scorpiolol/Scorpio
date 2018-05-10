@@ -10,6 +10,7 @@ import zcy.developer.scorpiosdk.base.IBaseView;
 import zcy.developer.scorpiosdk.base.SimpleActivity;
 import zcy.developer.scorpiosdk.net.builder.SoNetworkService;
 import zcy.developer.scorpiosdk.net.request.SoNetRequest;
+import zcy.developer.scorpiosdk.net.request.SoRequestListener;
 
 /**
  * @author zcy
@@ -34,6 +35,7 @@ public class MainActivity extends SimpleActivity implements IBaseView {
                 .setBaseUrl("https://www.sojson.com/open/api/weather/")
                 .create();
 
+
         bt1.setOnClickListener(v -> {
             TwoActivity.startActivity(getContext());
             finish();
@@ -46,7 +48,19 @@ public class MainActivity extends SimpleActivity implements IBaseView {
         Log.e(TAG, "onDestroy: ");
         Api api = (Api) service.getApi();
         Observable<String> o = api.getTest("成都");
-        SoNetRequest.create(o).bindLifecycle(this).start();
+        SoNetRequest.create(o)
+                .bindLifecycle(this)
+                .start(new SoRequestListener<String>() {
+                    @Override
+                    public void onSuccess(String data) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable, String msg) {
+
+                    }
+                });
     }
 
     @Override
