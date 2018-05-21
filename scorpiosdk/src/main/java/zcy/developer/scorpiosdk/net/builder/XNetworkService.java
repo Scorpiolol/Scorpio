@@ -32,7 +32,7 @@ public class XNetworkService<T> {
     private HttpLoggingInterceptor.Level mImgLevel;
     private Map<String, String> defaultHeader;
     private Map<String, String> header;
-    private int connectTime = 1000 * 10;
+    private int connectTime = 1000 * 5;
     private OkHttpClient.Builder builder;
     private Converter.Factory factory;
     private CallAdapter.Factory adapterFactory;

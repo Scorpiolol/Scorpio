@@ -1,5 +1,6 @@
 package zcy.developer.scorpiosdk.net.request;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 
@@ -7,6 +8,7 @@ import com.trello.rxlifecycle2.LifecycleProvider;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import zcy.developer.scorpiosdk.base.IBaseView;
 import zcy.developer.scorpiosdk.util.RxUtils;
@@ -23,6 +25,7 @@ public class Request<T> {
         observable = o;
     }
 
+    @SuppressLint("CheckResult")
     public <V> Request<T> bindLifecycle(V view) {
         if (view instanceof Activity || view instanceof Fragment || view instanceof IBaseView) {
             if (view instanceof LifecycleProvider) {
@@ -47,20 +50,26 @@ public class Request<T> {
                 .unsubscribeOn(Schedulers.io());
     }
 
-    public void start() {
-        getObservable()
+    public Disposable start() {
+        return getObservable()
                 .subscribe();
     }
 
-    public void startNonMainThread(SoRequestListener<T> listener) {
-        getObservable()
+    public Disposable start(SoRequestListener<T> listener) {
+        return getObservable()
+                .subscribe(listener::onSuccess,
+                        throwable -> listener.onError(throwable, throwable.getMessage()));
+    }
+
+    public Disposable startByIO(SoRequestListener<T> listener) {
+        return getObservable()
                 .observeOn(Schedulers.io())
                 .subscribe(listener::onSuccess,
                         throwable -> listener.onError(throwable, throwable.getMessage()));
     }
 
-    public void start(SoRequestListener<T> listener) {
-        getObservable()
+    public Disposable startByMain(SoRequestListener<T> listener) {
+        return getObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(listener::onSuccess,
                         throwable -> listener.onError(throwable, throwable.getMessage()));

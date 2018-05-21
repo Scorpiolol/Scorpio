@@ -8,8 +8,8 @@ import io.reactivex.Observable;
 import zcy.developer.scorpio.net.Api;
 import zcy.developer.scorpiosdk.base.IBaseView;
 import zcy.developer.scorpiosdk.base.SimpleActivity;
-import zcy.developer.scorpiosdk.net.builder.XNetworkService;
-import zcy.developer.scorpiosdk.net.request.XNetRequest;
+import zcy.developer.scorpiosdk.net.builder.SoNetworkService;
+import zcy.developer.scorpiosdk.net.request.SoNetRequest;
 
 /**
  * @author zcy
@@ -33,6 +33,7 @@ public class MainActivity extends SimpleActivity implements IBaseView {
                 .setApi(Api.class)
                 .setBaseUrl("https://www.sojson.com/open/api/weather/")
                 .create();
+
 
         bt1.setOnClickListener(v -> {
             TwoActivity.startActivity(getContext());
