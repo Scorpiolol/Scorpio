@@ -45,7 +45,7 @@ public interface IBuilder {
 
     interface Api<T> {
 
-        SoNetworkService<T> create();
+        XNetworkService<T> create();
 
         OkHttpClient.Builder getBuilder();
 
@@ -73,9 +73,9 @@ public interface IBuilder {
 
         Builder<T> setBuilder(OkHttpClient.Builder builder);
 
-        Builder<T> addConverterFactory(Converter.Factory factory);
+        Builder<T> setConverterFactory(Converter.Factory factory);
 
-        Builder<T> addAdapterFactory(CallAdapter.Factory adapterFactory);
+        Builder<T> setAdapterFactory(CallAdapter.Factory adapterFactory);
 
     }
 

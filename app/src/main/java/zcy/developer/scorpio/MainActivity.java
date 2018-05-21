@@ -8,8 +8,8 @@ import io.reactivex.Observable;
 import zcy.developer.scorpio.net.Api;
 import zcy.developer.scorpiosdk.base.IBaseView;
 import zcy.developer.scorpiosdk.base.SimpleActivity;
-import zcy.developer.scorpiosdk.net.builder.SoNetworkService;
-import zcy.developer.scorpiosdk.net.request.SoNetRequest;
+import zcy.developer.scorpiosdk.net.builder.XNetworkService;
+import zcy.developer.scorpiosdk.net.request.XNetRequest;
 
 /**
  * @author zcy
@@ -19,7 +19,7 @@ public class MainActivity extends SimpleActivity implements IBaseView {
     @BindView(R.id.bt1)
     Button bt1;
 
-    private SoNetworkService service;
+    private XNetworkService service;
 
     @Override
     protected int setLayoutId() {
@@ -28,7 +28,7 @@ public class MainActivity extends SimpleActivity implements IBaseView {
 
     @Override
     protected void init() {
-        service = new SoNetworkService
+        service = new XNetworkService
                 .Builder<Api>()
                 .setApi(Api.class)
                 .setBaseUrl("https://www.sojson.com/open/api/weather/")
@@ -46,7 +46,7 @@ public class MainActivity extends SimpleActivity implements IBaseView {
         Log.e(TAG, "onDestroy: ");
         Api api = (Api) service.getApi();
         Observable<String> o = api.getTest("成都");
-        SoNetRequest.create(o).bindLifecycle(this).start();
+        XNetRequest.create(o).bindLifecycle(this).start();
     }
 
     @Override
