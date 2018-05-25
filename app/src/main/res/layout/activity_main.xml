@@ -3,14 +3,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    tools:context="zcy.developer.scorpio.MainActivity">
+    android:orientation="vertical"
+    tools:context="zcy.developer.scorpio.module.one.MainActivity">
 
-    <Button
-        android:id="@+id/bt1"
-        android:layout_width="100dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="按钮" />
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/etWeather"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:hint="城市"
+                android:lines="1" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btGoTwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="红色" />
+
+        <Button
+            android:id="@+id/btBlue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="蓝色" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp" />
+
 
 </LinearLayout>

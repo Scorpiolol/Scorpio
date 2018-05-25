@@ -9,7 +9,7 @@ import io.reactivex.Observable;
  * @date 2018/3/27.
  */
 
-public class SoNetRequest {
+public class XNetRequest {
 
     public static <T> Request<T> create(Observable<T> observable) {
         observable.debounce(500, TimeUnit.MILLISECONDS);

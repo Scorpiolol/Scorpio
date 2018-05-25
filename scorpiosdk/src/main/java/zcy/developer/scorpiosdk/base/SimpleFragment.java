@@ -35,7 +35,7 @@ public abstract class SimpleFragment extends RxFragment implements IBaseView {
             unbinder = ButterKnife.bind(this, view);
         }
         init();
-        getLifecycle().addObserver(this);
+//        getLifecycle().addObserver(this);
         return view;
     }
 

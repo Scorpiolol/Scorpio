@@ -1,7 +1,8 @@
 package zcy.developer.scorpiosdk.util;
 
-import android.app.Application;
 import android.widget.Toast;
+
+import zcy.developer.scorpiosdk.App;
 
 /**
  * @author zcy.
@@ -12,9 +13,9 @@ public class ToastUtils {
     private static Toast toast = null;
     private static long oneTime = 0;
     private static long twoTime = 0;
-    private static Application APP;
+    private static App APP;
 
-    public static void init(Application application) {
+    public static void init(App application) {
         APP = application;
     }
 

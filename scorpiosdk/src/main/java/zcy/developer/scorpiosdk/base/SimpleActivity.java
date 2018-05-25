@@ -32,7 +32,7 @@ public abstract class SimpleActivity extends RxAppCompatActivity implements IBas
         }
         ButterKnife.bind(this);
         init();
-        getLifecycle().addObserver(this);
+//        getLifecycle().addObserver(this);
     }
 
     @Override

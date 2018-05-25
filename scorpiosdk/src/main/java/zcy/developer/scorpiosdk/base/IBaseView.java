@@ -1,9 +1,6 @@
 package zcy.developer.scorpiosdk.base;
 
 import android.app.Activity;
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleObserver;
-import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Context;
 
 /**
@@ -12,7 +9,9 @@ import android.content.Context;
  * 视图层接口基类
  */
 
-public interface IBaseView extends LifecycleObserver {
+public interface IBaseView
+//        extends LifecycleObserver
+{
 
     /**
      * 吐司提示
@@ -25,7 +24,7 @@ public interface IBaseView extends LifecycleObserver {
 
     Activity getActivity();
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    void initData();
+//    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+//    void initData();
 
 }

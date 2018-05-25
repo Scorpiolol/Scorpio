@@ -23,7 +23,7 @@ import zcy.developer.scorpiosdk.net.interceptor.HeaderInterceptor;
  * @author zcy.
  * @date 2018/3/25.
  */
-public class SoNetworkService<T> {
+public class XNetworkService<T> {
 
     private String baseUrl;
     private Class<T> api;
@@ -37,17 +37,17 @@ public class SoNetworkService<T> {
     private Converter.Factory factory;
     private CallAdapter.Factory adapterFactory;
 
-    SoNetworkService<T> setApi(final Class<T> api) {
+    XNetworkService<T> setApi(final Class<T> api) {
         this.api = api;
         return this;
     }
 
-    SoNetworkService<T> setBaseUrl(String baseUrl) {
+    XNetworkService<T> setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
         return this;
     }
 
-    SoNetworkService<T> addInterceptor(Interceptor... interceptors) {
+    XNetworkService<T> addInterceptor(Interceptor... interceptors) {
         if (this.interceptors == null) {
             this.interceptors = new ArrayList<>();
         }
@@ -57,27 +57,27 @@ public class SoNetworkService<T> {
         return this;
     }
 
-    SoNetworkService<T> addDefaultHeader(Map<String, String> defaultHeader) {
+    XNetworkService<T> addDefaultHeader(Map<String, String> defaultHeader) {
         this.defaultHeader = defaultHeader;
         return this;
     }
 
-    SoNetworkService<T> addHeader(Map<String, String> header) {
+    XNetworkService<T> addHeader(Map<String, String> header) {
         this.header = header;
         return this;
     }
 
-    SoNetworkService<T> addConverterFactory(Converter.Factory factory) {
+    XNetworkService<T> addConverterFactory(Converter.Factory factory) {
         this.factory = factory;
         return this;
     }
 
-    SoNetworkService<T> addCallAdapterFactory(CallAdapter.Factory factory) {
+    XNetworkService<T> addCallAdapterFactory(CallAdapter.Factory factory) {
         this.adapterFactory = factory;
         return this;
     }
 
-    SoNetworkService<T> setLogLevel(int level) {
+    XNetworkService<T> setLogLevel(int level) {
         switch (level) {
             case HeaderConfig.BODY:
                 mLevel = HttpLoggingInterceptor.Level.BODY;
@@ -99,12 +99,12 @@ public class SoNetworkService<T> {
         return this;
     }
 
-    SoNetworkService<T> setConnectTimeout(int milliseconds) {
+    XNetworkService<T> setConnectTimeout(int milliseconds) {
         this.connectTime = milliseconds;
         return this;
     }
 
-    SoNetworkService<T> setBuilder(OkHttpClient.Builder builder) {
+    XNetworkService<T> setBuilder(OkHttpClient.Builder builder) {
         this.builder = builder;
         return this;
     }

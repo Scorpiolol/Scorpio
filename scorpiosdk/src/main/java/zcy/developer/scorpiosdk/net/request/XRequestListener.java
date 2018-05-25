@@ -5,7 +5,7 @@ package zcy.developer.scorpiosdk.net.request;
  * @date 2018/3/28.
  */
 
-public interface SoRequestListener<T> {
+public interface XRequestListener<T> {
 
     void onSuccess(T data);
 

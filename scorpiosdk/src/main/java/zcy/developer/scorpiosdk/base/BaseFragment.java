@@ -36,7 +36,7 @@ public abstract class BaseFragment<P extends IBasePresenter<IBaseView>>
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        getLifecycle().addObserver(this);
+//        getLifecycle().addObserver(this);
         mContext = getActivity();
         if (setLayoutId() != 0) {
             layoutRes = setLayoutId();
@@ -61,6 +61,8 @@ public abstract class BaseFragment<P extends IBasePresenter<IBaseView>>
     protected abstract void initView();
 
     protected abstract void initListener();
+
+    protected abstract void initData();
 
     protected abstract void onClickView(View v);
 

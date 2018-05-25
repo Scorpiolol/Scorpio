@@ -72,7 +72,8 @@ public abstract class BaseActivity<P extends IBasePresenter<IBaseView>>
         ButterKnife.bind(this);
         initView();
         initListener();
-        getLifecycle().addObserver(this);
+        initData();
+//        getLifecycle().addObserver(this);
 
         if (useEventBus(isUseEventBus)) {
             Log.d(TAG, "onCreate: 注册EventBus");
@@ -108,6 +109,8 @@ public abstract class BaseActivity<P extends IBasePresenter<IBaseView>>
     protected abstract void initView();
 
     protected abstract void initListener();
+
+    protected abstract void initData();
 
     protected abstract void onClickView(View v);
 

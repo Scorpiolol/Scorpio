@@ -55,20 +55,20 @@ public class Request<T> {
                 .subscribe();
     }
 
-    public Disposable start(SoRequestListener<T> listener) {
+    public Disposable start(XRequestListener<T> listener) {
         return getObservable()
                 .subscribe(listener::onSuccess,
                         throwable -> listener.onError(throwable, throwable.getMessage()));
     }
 
-    public Disposable startByIO(SoRequestListener<T> listener) {
+    public Disposable startByIO(XRequestListener<T> listener) {
         return getObservable()
                 .observeOn(Schedulers.io())
                 .subscribe(listener::onSuccess,
                         throwable -> listener.onError(throwable, throwable.getMessage()));
     }
 
-    public Disposable startByMain(SoRequestListener<T> listener) {
+    public Disposable startByMain(XRequestListener<T> listener) {
         return getObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(listener::onSuccess,
