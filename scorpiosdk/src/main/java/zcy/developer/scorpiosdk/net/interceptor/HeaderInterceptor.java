@@ -27,6 +27,15 @@ public class HeaderInterceptor implements Interceptor {
 
     }
 
+    public HeaderInterceptor(Map<String, String> headerMap) {
+        this.headerMap = headerMap;
+    }
+
+    public HeaderInterceptor(Map<String, String> defaultHeaderMap, Map<String, String> headerMap) {
+        this.defaultHeaderMap = defaultHeaderMap;
+        this.headerMap = headerMap;
+    }
+
     public HeaderInterceptor setHeader(Map<String, String> headerMap) {
         this.headerMap = headerMap;
         return this;

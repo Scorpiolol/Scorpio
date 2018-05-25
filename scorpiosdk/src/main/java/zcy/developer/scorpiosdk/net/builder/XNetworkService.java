@@ -113,9 +113,10 @@ public class XNetworkService<T> {
         if (builder == null) {
             builder = new OkHttpClient.Builder();
         }
-        builder.addInterceptor(new HeaderInterceptor()
-                .setDefaultHeader(defaultHeader)
-                .setHeader(header))
+        builder
+                .addInterceptor(new HeaderInterceptor()
+                        .setDefaultHeader(defaultHeader)
+                        .setHeader(header))
                 .connectTimeout(connectTime, TimeUnit.MILLISECONDS);
         addInterceptors(builder, interceptors);
         return builder;
@@ -223,13 +224,13 @@ public class XNetworkService<T> {
         }
 
         @Override
-        public IBuilder.Builder<T> addConverterFactory(Converter.Factory factory) {
+        public IBuilder.Builder<T> setConverterFactory(Converter.Factory factory) {
             this.factory = factory;
             return this;
         }
 
         @Override
-        public IBuilder.Builder<T> addAdapterFactory(CallAdapter.Factory adapterFactory) {
+        public IBuilder.Builder<T> setAdapterFactory(CallAdapter.Factory adapterFactory) {
             this.adapterFactory = adapterFactory;
             return this;
         }
