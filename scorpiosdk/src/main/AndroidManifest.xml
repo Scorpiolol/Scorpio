@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="zcy.developer.scorpiosdk" />
+<manifest package="zcy.developer.scorpiosdk" />

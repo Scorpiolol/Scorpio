@@ -12,7 +12,11 @@ import io.reactivex.Observable;
 public class XNetRequest {
 
     public static <T> Request<T> create(Observable<T> observable) {
-        observable.debounce(500, TimeUnit.MILLISECONDS);
+        return new Request<>(observable);
+    }
+
+    public static <T> Request<T> create(Observable<T> observable, int debounceTime) {
+        observable.debounce(debounceTime, TimeUnit.MILLISECONDS);
         return new Request<>(observable);
     }
 
