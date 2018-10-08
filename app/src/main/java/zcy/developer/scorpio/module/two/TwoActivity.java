@@ -13,7 +13,7 @@ import zcy.developer.scorpio.R;
 import zcy.developer.scorpio.config.ColorConfig;
 import zcy.developer.scorpio.config.WeatherConfig;
 import zcy.developer.scorpio.entity.WeatherData;
-import zcy.developer.scorpiosdk.base.BaseActivity;
+import zcy.developer.scorpio.base.BaseActivity;
 
 /**
  * @author zcy.

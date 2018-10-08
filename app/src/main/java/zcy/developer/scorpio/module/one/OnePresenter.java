@@ -7,8 +7,8 @@ import zcy.developer.scorpio.config.ColorConfig;
 import zcy.developer.scorpio.module.two.TwoActivity;
 import zcy.developer.scorpio.module.weather.WeatherContract;
 import zcy.developer.scorpio.module.weather.WeatherPresenter;
-import zcy.developer.scorpiosdk.base.BasePresenter;
-import zcy.developer.scorpiosdk.base.IBaseView;
+import zcy.developer.scorpio.base.BasePresenter;
+import zcy.developer.scorpio.base.IBaseView;
 
 /**
  * One业务逻辑

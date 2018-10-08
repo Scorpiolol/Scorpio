@@ -47,12 +47,12 @@ public class ApiBuilder<T> implements IBuilder.Api<T> {
                 .setBaseUrl(baseUrl)
                 .setApi(value.api())
                 .addInterceptor(value.interceptors())
+                .addInterceptor(value.logInterceptor())
                 .addHeader(value.header())
                 .setBuilder(value.builder())
                 .addDefaultHeader(value.defaultHeader())
                 .setConnectTimeout(value.connectTime())
                 .addCallAdapterFactory(value.adapterFactory())
-                .addConverterFactory(value.factory())
-                .setLogLevel(value.level());
+                .addConverterFactory(value.factory());
     }
 }

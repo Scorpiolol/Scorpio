@@ -1,4 +1,4 @@
-package zcy.developer.scorpiosdk.base;
+package zcy.developer.scorpio.base;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,7 +22,6 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
-import zcy.developer.scorpiosdk.util.ToastUtils;
 
 /**
  * @author zcy

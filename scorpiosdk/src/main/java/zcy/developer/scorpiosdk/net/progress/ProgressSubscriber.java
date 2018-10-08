@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
-import zcy.developer.scorpiosdk.base.IBaseView;
 import zcy.developer.scorpiosdk.net.request.XRequestListener;
 
 /**
@@ -21,14 +20,9 @@ public class ProgressSubscriber<T> implements ProgressCancelListener, Observer<T
     private XRequestListener<T> requestListener;
     private Disposable disposable;
     private String message;
-    private IBaseView iBaseView;
     private Activity activity;
     private ProgressDialog dialog;
 
-    public ProgressSubscriber(XRequestListener<T> requestListener, IBaseView iBaseView) {
-        this.requestListener = requestListener;
-        this.iBaseView = iBaseView;
-    }
 
     public ProgressSubscriber(XRequestListener<T> requestListener, Activity activity) {
         this.requestListener = requestListener;
@@ -36,7 +30,7 @@ public class ProgressSubscriber<T> implements ProgressCancelListener, Observer<T
     }
 
     private void showProgressDialog() {
-        dialog = new ProgressDialog(iBaseView != null ? iBaseView.getContext() : activity);
+        dialog = new ProgressDialog(activity);
         dialog.setMessage(message);
         dialog.show();
     }

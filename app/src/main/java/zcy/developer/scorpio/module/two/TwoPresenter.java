@@ -3,8 +3,8 @@ package zcy.developer.scorpio.module.two;
 import zcy.developer.scorpio.module.one.MainActivity;
 import zcy.developer.scorpio.module.one.OneContract;
 import zcy.developer.scorpio.module.one.OnePresenter;
-import zcy.developer.scorpiosdk.base.BasePresenter;
-import zcy.developer.scorpiosdk.base.IBaseView;
+import zcy.developer.scorpio.base.BasePresenter;
+import zcy.developer.scorpio.base.IBaseView;
 
 /**
  * Two业务逻辑

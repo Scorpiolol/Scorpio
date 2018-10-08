@@ -1,4 +1,4 @@
-package zcy.developer.scorpiosdk.base;
+package zcy.developer.scorpio.base;
 
 import android.support.annotation.UiThread;
 import android.util.Log;

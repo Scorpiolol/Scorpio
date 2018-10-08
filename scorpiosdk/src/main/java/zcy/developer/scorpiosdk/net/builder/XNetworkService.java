@@ -28,8 +28,6 @@ public class XNetworkService<T> {
     private String baseUrl;
     private Class<T> api;
     private ArrayList<Interceptor> interceptors;
-    private HttpLoggingInterceptor.Level mLevel;
-    private HttpLoggingInterceptor.Level mImgLevel;
     private Map<String, String> defaultHeader;
     private Map<String, String> header;
     private int connectTime = 1000 * 5;
@@ -77,28 +75,6 @@ public class XNetworkService<T> {
         return this;
     }
 
-    XNetworkService<T> setLogLevel(int level) {
-        switch (level) {
-            case HeaderConfig.BODY:
-                mLevel = HttpLoggingInterceptor.Level.BODY;
-                break;
-            case HeaderConfig.BASIC:
-                mLevel = HttpLoggingInterceptor.Level.BASIC;
-                break;
-            case HeaderConfig.HEADERS:
-                mLevel = HttpLoggingInterceptor.Level.HEADERS;
-                break;
-            case HeaderConfig.NONE:
-                mLevel = HttpLoggingInterceptor.Level.NONE;
-                break;
-            default:
-                mLevel = HttpLoggingInterceptor.Level.BODY;
-                break;
-        }
-        mImgLevel = mLevel;
-        return this;
-    }
-
     XNetworkService<T> setConnectTimeout(int milliseconds) {
         this.connectTime = milliseconds;
         return this;
@@ -111,14 +87,13 @@ public class XNetworkService<T> {
 
     OkHttpClient.Builder getBuilder() {
         if (builder == null) {
-            builder = new OkHttpClient.Builder();
+            builder = new OkHttpClient.Builder()
+                    .addInterceptor(new HeaderInterceptor()
+                            .setDefaultHeader(defaultHeader)
+                            .setHeader(header))
+                    .connectTimeout(connectTime, TimeUnit.MILLISECONDS);
+            addInterceptors(builder, interceptors);
         }
-        builder
-                .addInterceptor(new HeaderInterceptor()
-                        .setDefaultHeader(defaultHeader)
-                        .setHeader(header))
-                .connectTimeout(connectTime, TimeUnit.MILLISECONDS);
-        addInterceptors(builder, interceptors);
         return builder;
     }
 
@@ -133,31 +108,12 @@ public class XNetworkService<T> {
 
     public T getApi() {
         OkHttpClient.Builder builder = getBuilder();
-        builder.addInterceptor(new HttpLoggingInterceptor(this::createLog)
-                .setLevel(mLevel));
-        return create(builder.build());
-    }
-
-    public T getImgApi() {
-        OkHttpClient.Builder builder = getBuilder();
-        builder.addInterceptor(new HttpLoggingInterceptor(this::createLog)
-                .setLevel(mImgLevel));
         return create(builder.build());
     }
 
     private void addInterceptors(OkHttpClient.Builder builder, ArrayList<Interceptor> interceptors) {
         for (Interceptor i : interceptors) {
             builder.addInterceptor(i);
-        }
-    }
-
-    private void createLog(String veryLongString) {
-        int maxLogSize = 1000;
-        for (int i = 0; i <= veryLongString.length() / maxLogSize; i++) {
-            int start = i * maxLogSize;
-            int end = (i + 1) * maxLogSize;
-            end = end > veryLongString.length() ? veryLongString.length() : end;
-            Log.d("网络请求", veryLongString.substring(start, end));
         }
     }
 
@@ -172,7 +128,6 @@ public class XNetworkService<T> {
     public static class Builder<T> implements IBuilder.Builder<T>, IBuilder.Value<T> {
 
         private Interceptor[] interceptors;
-        private int level;
         private Map<String, String> defaultHeader;
         private Map<String, String> header;
         private int connectTime;
@@ -180,6 +135,9 @@ public class XNetworkService<T> {
         private Class<T> api;
         private Converter.Factory factory;
         private CallAdapter.Factory adapterFactory;
+
+        private HttpLoggingInterceptor.Level mLevel;
+        private boolean isOpenLog;
 
         @Override
         public IBuilder.BaseUrl<T> setApi(@NonNull Class<T> api) {
@@ -199,15 +157,33 @@ public class XNetworkService<T> {
             return this;
         }
 
+
         @Override
-        public IBuilder.Builder<T> addHeader(Map<String, String> header) {
-            this.header = header;
+        public IBuilder.Builder<T> setLogLevel(boolean isOpenLog, int level) {
+            switch (level) {
+                case HeaderConfig.BODY:
+                    mLevel = HttpLoggingInterceptor.Level.BODY;
+                    break;
+                case HeaderConfig.BASIC:
+                    mLevel = HttpLoggingInterceptor.Level.BASIC;
+                    break;
+                case HeaderConfig.HEADERS:
+                    mLevel = HttpLoggingInterceptor.Level.HEADERS;
+                    break;
+                case HeaderConfig.NONE:
+                    mLevel = HttpLoggingInterceptor.Level.NONE;
+                    break;
+                default:
+                    mLevel = HttpLoggingInterceptor.Level.BODY;
+                    break;
+            }
+            this.isOpenLog = isOpenLog;
             return this;
         }
 
         @Override
-        public IBuilder.Builder<T> setLogLevel(int level) {
-            this.level = level;
+        public IBuilder.Builder<T> addHeader(Map<String, String> header) {
+            this.header = header;
             return this;
         }
 
@@ -241,14 +217,15 @@ public class XNetworkService<T> {
             return api;
         }
 
+
         @Override
         public Interceptor[] interceptors() {
             return interceptors;
         }
 
         @Override
-        public int level() {
-            return level;
+        public Interceptor logInterceptor() {
+            return isOpenLog ? new HttpLoggingInterceptor(this::createLog).setLevel(mLevel) : null;
         }
 
         @Override
@@ -282,5 +259,14 @@ public class XNetworkService<T> {
         }
 
 
+        private void createLog(String veryLongString) {
+            int maxLogSize = 1000;
+            for (int i = 0; i <= veryLongString.length() / maxLogSize; i++) {
+                int start = i * maxLogSize;
+                int end = (i + 1) * maxLogSize;
+                end = end > veryLongString.length() ? veryLongString.length() : end;
+                Log.d("网络请求", veryLongString.substring(start, end));
+            }
+        }
     }
 }

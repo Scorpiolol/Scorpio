@@ -10,7 +10,6 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import zcy.developer.scorpiosdk.base.IBaseView;
 import zcy.developer.scorpiosdk.util.RxUtils;
 
 /**
@@ -27,7 +26,7 @@ public class Request<T> {
 
     @SuppressLint("CheckResult")
     public <V> Request<T> bindLifecycle(V view) {
-        if (view instanceof Activity || view instanceof Fragment || view instanceof IBaseView) {
+        if (view instanceof Activity || view instanceof Fragment) {
             if (view instanceof LifecycleProvider) {
                 observable.compose(RxUtils.bindToLifecycle(view));
             } else {

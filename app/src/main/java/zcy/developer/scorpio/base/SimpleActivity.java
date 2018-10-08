@@ -1,4 +1,4 @@
-package zcy.developer.scorpiosdk.base;
+package zcy.developer.scorpio.base;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import butterknife.ButterKnife;
-import zcy.developer.scorpiosdk.util.ToastUtils;
 
 /**
  * @author zcy.

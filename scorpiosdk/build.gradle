@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply from: 'maven-release-aar.gradle'
+//apply from: 'maven-release-aar.gradle'
 apply plugin: 'maven'
 
 android {
@@ -35,22 +35,15 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api 'com.android.support:appcompat-v7:27.1.1'
 //    api 'com.android.support:support-v4:27.1.1'
-    api "com.android.support:design:27.1.1"
+//    api "com.android.support:design:27.1.1"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    api 'com.android.support:multidex:1.0.3'
 
     api 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1'
     api 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
-
-    api 'com.jakewharton:butterknife:8.8.1'
-
-    // EventBus
-    api 'org.greenrobot:eventbus:3.1.1'
-
-    api 'com.android.support:multidex:1.0.3'
-
-    api 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    api 'io.reactivex.rxjava2:rxandroid:2.1.0'
 
     // retrofit网络请求框架
     api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
@@ -59,4 +52,30 @@ dependencies {
     api 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     api 'com.squareup.okhttp3:okhttp:3.10.0'
     api 'org.ligboy.retrofit2:converter-fastjson-android:2.2.0'
+}
+
+
+def MAVEN_LOCAL_PATH = 'http://172.21.16.247:8081/nexus/content/repositories/XgimiApi'
+def ARTIFACT_ID = 'scorpio'
+def VERSION_NAME = 'v1.1.3'
+def GROUP_ID = 'com.xgimi.util'
+def ACCOUNT = 'admin'
+def PASSWORD = 'admin123'
+
+//脚本：将Lib打成aar包上传至maven私有库
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: MAVEN_LOCAL_PATH) {
+                authentication(userName: ACCOUNT, password: PASSWORD)
+            }
+            pom.project {
+                groupId GROUP_ID
+                artifactId ARTIFACT_ID
+                version VERSION_NAME
+                packaging 'aar'
+            }
+        }
+    }
+
 }

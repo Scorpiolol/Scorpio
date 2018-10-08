@@ -1,4 +1,4 @@
-package zcy.developer.scorpiosdk.base;
+package zcy.developer.scorpio.base;
 
 /**
  * @author zcy.

@@ -10,7 +10,6 @@ import java.io.IOException;
 import io.reactivex.Observable;
 import okhttp3.Interceptor;
 import okhttp3.Response;
-import zcy.developer.scorpiosdk.App;
 
 /**
  * 将http返回的cookie存储到本地

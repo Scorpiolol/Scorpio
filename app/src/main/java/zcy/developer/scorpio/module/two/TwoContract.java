@@ -2,8 +2,8 @@ package zcy.developer.scorpio.module.two;
 
 import zcy.developer.scorpio.module.one.OneContract;
 import zcy.developer.scorpio.module.weather.WeatherContract;
-import zcy.developer.scorpiosdk.base.IBasePresenter;
-import zcy.developer.scorpiosdk.base.IBaseView;
+import zcy.developer.scorpio.base.IBasePresenter;
+import zcy.developer.scorpio.base.IBaseView;
 
 /**
  * TwoContact协议

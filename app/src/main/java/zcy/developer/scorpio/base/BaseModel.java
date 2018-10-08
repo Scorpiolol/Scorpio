@@ -1,9 +1,7 @@
-package zcy.developer.scorpiosdk.base;
+package zcy.developer.scorpio.base;
 
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
-
-import zcy.developer.scorpiosdk.App;
 
 /**
  * @author zcy.

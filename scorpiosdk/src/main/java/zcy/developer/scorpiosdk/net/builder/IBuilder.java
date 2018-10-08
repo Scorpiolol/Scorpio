@@ -22,7 +22,7 @@ public interface IBuilder {
 
         Interceptor[] interceptors();
 
-        int level();
+        Interceptor logInterceptor();
 
         Map<String, String> defaultHeader();
 
@@ -65,9 +65,9 @@ public interface IBuilder {
 
         Builder<T> addDefaultHeader(Map<String, String> defaultHeader);
 
-        Builder<T> addHeader(Map<String, String> header);
+        Builder<T> setLogLevel(boolean isOpenLog, int level);
 
-        Builder<T> setLogLevel(int level);
+        Builder<T> addHeader(Map<String, String> header);
 
         Builder<T> setConnectTimeout(int milliseconds);
 

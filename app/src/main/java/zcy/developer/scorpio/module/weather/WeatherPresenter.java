@@ -1,8 +1,8 @@
 package zcy.developer.scorpio.module.weather;
 
 import zcy.developer.scorpio.entity.WeatherData;
-import zcy.developer.scorpiosdk.base.BasePresenter;
-import zcy.developer.scorpiosdk.base.IBaseView;
+import zcy.developer.scorpio.base.BasePresenter;
+import zcy.developer.scorpio.base.IBaseView;
 import zcy.developer.scorpiosdk.net.request.XRequestListener;
 
 /**
