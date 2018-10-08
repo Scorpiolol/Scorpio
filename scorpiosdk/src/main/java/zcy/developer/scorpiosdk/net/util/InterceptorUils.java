@@ -21,7 +21,7 @@ public class InterceptorUils {
         return new AddCookiesInterceptor(context, lang);
     }
 
-    public static Interceptor getReceivedCookies() {
-        return new ReceivedCookiesInterceptor();
+    public static Interceptor getReceivedCookies(Context context) {
+        return new ReceivedCookiesInterceptor(context);
     }
 }

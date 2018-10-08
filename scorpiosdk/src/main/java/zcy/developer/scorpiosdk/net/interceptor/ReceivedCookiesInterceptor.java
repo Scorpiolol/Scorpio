@@ -21,9 +21,9 @@ import okhttp3.Response;
 public class ReceivedCookiesInterceptor implements Interceptor {
     private SharedPreferences sharedPreferences;
 
-    public ReceivedCookiesInterceptor() {
+    public ReceivedCookiesInterceptor(Context context) {
         super();
-        sharedPreferences = App.getInstance().getSharedPreferences("cookie", Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences("cookie", Context.MODE_PRIVATE);
     }
 
     @SuppressLint("CheckResult")
@@ -33,11 +33,11 @@ public class ReceivedCookiesInterceptor implements Interceptor {
         if (!originalResponse.headers("set-cookie").isEmpty()) {
             final StringBuffer cookieBuffer = new StringBuffer();
             Observable.fromIterable(originalResponse.headers("set-cookie"))
-                    .map(s -> {
-                        String[] cookieArray = s.split(";");
-                        return cookieArray[0];
-                    })
-                    .subscribe(cookie -> cookieBuffer.append(cookie).append(";"));
+                      .map(s -> {
+                          String[] cookieArray = s.split(";");
+                          return cookieArray[0];
+                      })
+                      .subscribe(cookie -> cookieBuffer.append(cookie).append(";"));
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("cookie", cookieBuffer.toString());
             editor.apply();
