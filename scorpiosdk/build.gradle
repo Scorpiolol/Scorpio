@@ -57,7 +57,7 @@ dependencies {
 
 def MAVEN_LOCAL_PATH = 'http://172.21.16.247:8081/nexus/content/repositories/XgimiApi'
 def ARTIFACT_ID = 'scorpio'
-def VERSION_NAME = 'v1.1.7'
+def VERSION_NAME = 'v1.1.10'
 def GROUP_ID = 'com.xgimi.util'
 def ACCOUNT = 'admin'
 def PASSWORD = 'admin123'

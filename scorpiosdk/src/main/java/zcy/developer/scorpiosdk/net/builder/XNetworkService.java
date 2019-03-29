@@ -112,8 +112,13 @@ public class XNetworkService<T> {
     }
 
     private void addInterceptors(OkHttpClient.Builder builder, ArrayList<Interceptor> interceptors) {
+        if (interceptors == null || interceptors.size() <= 0) {
+            return;
+        }
         for (Interceptor i : interceptors) {
-            builder.addInterceptor(i);
+            if (i != null) {
+                builder.addInterceptor(i);
+            }
         }
     }
 
